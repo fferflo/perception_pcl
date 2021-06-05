@@ -167,7 +167,10 @@ class PointCloudToPCD
 
       cloud_topic_ = "input";
 
-      sub_ = nh_.subscribe (cloud_topic_, 1,  &PointCloudToPCD::cloud_cb, this);
+      int queue_size;
+      priv_nh.param<int>("queue_size", queue_size, 10);
+
+      sub_ = nh_.subscribe (cloud_topic_, queue_size,  &PointCloudToPCD::cloud_cb, this);
       ROS_INFO ("Listening for incoming data on topic %s",
                 nh_.resolveName (cloud_topic_).c_str ());
     }
